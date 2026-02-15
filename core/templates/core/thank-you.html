@@ -6,8 +6,10 @@
     <div id="lead-form">
 
         <div class="head">
-            <h4>{{ form_answered.form.name }}</h4>
-            <h5>{{ form_answered.form.subtitle}}</h5>
+            <div class="container">
+                <h4>{{ form_answered.form.name }}</h4>
+                <h5>{{ form_answered.form.subtitle}}</h5>
+            </div>
         </div>
 
         <div class="body">
@@ -19,28 +21,49 @@
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col">
-                        <h3>Ihre Anfrage wurde erfolgreich versendet!</h3>
-                    </div>
-                </div>
+                {% if form_answered.form.language == 'fr' %}
 
-                <div class="row">
-                    <div class="col">
-                        Wir werden uns in Kürze bei Ihnen melden.
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h3>Votre demande a été envoyée avec succès !</h3>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="col">
+                            Nous vous contacterons dès que possible.
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h3>Uw aanvraag is succesvol verzonden!</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            We nemen zo snel mogelijk contact met je op.
+                        </div>
+                    </div>
+
+                {% endif %}
 
             </div>
         </div>
     </div>
 
 
-
     {% if form_answered.form.external_thank_you_page %}
         {% addtoblock 'js' %}
             <script>
-                window.top.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                {% if form_answered.form.thankyoupage_out %}
+                    window.top.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                {% else %}
+                    window.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                {% endif %}
             </script>
         {% endaddtoblock %}
     {% endif %}

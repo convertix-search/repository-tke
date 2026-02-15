@@ -2,8 +2,14 @@ from django.forms import ModelForm
 from core.models import Lead
 
 
+class LeadShortForm(ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['first_name', 'phone', 'email', 'address', 'postal_code', 'gclid']
+
+
 class LeadForm(ModelForm):
     class Meta:
         model = Lead
-        fields = ['first_name', 'last_name', 'postal_code', 'address', 'location', 'phone', 'email', 'gclid', 'adgroup', 'keyword', 'campaign']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'address', 'postal_code', 'gclid']
 

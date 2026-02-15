@@ -1,0 +1,62 @@
+{% if form.type == 1 %}
+    <div class="row">
+        <div class="col-12 col-sm-3">
+            <input type="text" class="form-control mb-3" name="first_name" placeholder="Vorname*" required/>
+        </div>
+        <div class="col-12 col-sm-3">
+            <input type="text" class="form-control mb-3" name="last_name" placeholder="Nachname*" required/>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="phone" placeholder="Telefonnummer*" required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="postal_code" placeholder="Postleitzahl + Ort*" required/>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="email" class="form-control mb-3" name="email" placeholder="E-mail"/>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="first_name" placeholder="Vorname*" required/>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="last_name" placeholder="Nachname*" required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="phone" placeholder="Telefonnummer*" required/>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="email" class="form-control mb-3" name="email" placeholder="E-mail"/>
+        </div>
+    </div>
+
+
+    <div class="row mb-3">
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="address" placeholder="Straße + Nr.*" required/>
+        </div>
+        <div class="col-12 col-sm-6">
+            <input type="text" class="form-control mb-3" name="postal_code" placeholder="Postleitzahl + Ort*" required/>
+        </div>
+    </div>
+
+{% endif %}
+
+<div class="row mb-3">
+    <div class="col text-left">
+        <label class="accept-terms">
+            <input type="checkbox" class="konfAcceptTerms mr-1" name="accept_privacy_policy" value="1" required/>
+            Ich habe die ‘<a href="https://www.tkelevator.com/lu-de/datenschutz.html" target="_blank">rechtlichen Hinweise zum Datenschutz</a>’ zur Kenntnis genommen.
+    </label>
+    </div>
+</div>

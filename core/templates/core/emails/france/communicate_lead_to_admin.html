@@ -1,0 +1,110 @@
+{% extends 'core/emails/base.html' %}
+
+{% block title %}Nouveau Lead{% endblock %}
+
+{% block content %}
+    <p>Un nouveau lead a été enregistré, nous montrons ci-dessous ses informations:</p>
+
+    <br>
+
+    <p style="font-weight: 600;">Information de contact</p>
+
+    <table style="text-align: left; border: 1px solid #808080;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #808080; padding: 5px;">Field</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Réponse</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% if form.form %}
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">ID de configuration</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.form.id }}</td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Prénom</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.first_name }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Nom</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.last_name }}</td>
+            </tr>
+
+            {% if lead.gclid %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">gclid</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.gclid }}</td>
+                </tr>
+            {% endif %}
+
+            {% if lead.email %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">Email</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.email }}</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Téléphone</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.phone }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Date</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.created }}</td>
+            </tr>
+
+            {% if lead.address %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">Rue et numéro</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.address }}</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Code Postal</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.postal_code }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Adresse IP</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.ip_address }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Acceptation de la politique de confidentialité</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{% if form.accept_privacy_policy %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <p style="font-weight: 600; margin-bottom: 5px;">{{ form.form.name }}</p>
+    <p style="margin-top: 0;">{{ form.form.subtitle }}</p>
+
+    <table style="text-align: left;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #808080; padding: 5px;">Question</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Réponse</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in form.answers.all %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ answer.question.name }}</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ answer.value }}</td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}
