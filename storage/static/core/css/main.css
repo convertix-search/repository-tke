@@ -57,8 +57,8 @@ h6 {
 }
 #lead-form .head {
   position: relative;
-  background-image: linear-gradient(to right, #6700ac, #f26c08) !important;
-  padding: 30px 30px;
+  background-color: black;
+  padding: 30px 15px;
   color: #ffffff;
 }
 #lead-form .head h4 {
@@ -82,6 +82,8 @@ h6 {
 }
 #lead-form .body p.answer {
   font-size: 14px;
+  color: #000;
+  font-weight: 600;
 }
 #lead-form .body .accept-terms {
   font-size: 12px;
@@ -97,45 +99,44 @@ h6 {
   font-weight: 600;
 }
 .btn-primary {
-  background: #6700ac;
-  border-color: #6700ac;
+  background: #6FA491;
+  border-color: #6FA491;
   color: white;
 }
 .btn-primary:hover {
-  background: #A31AFF;
-  border-color: #A31AFF;
+  background: #6FA491;
+  border-color: #6FA491;
 }
 .btn-primary:focus {
-  background: #A31AFF;
-  border-color: #A31AFF;
+  background: #6FA491;
+  border-color: #6FA491;
   box-shadow: none;
 }
 .btn-primary:active {
-  background: #A31AFF;
-  border-color: #A31AFF;
+  background: #6FA491;
+  border-color: #6FA491;
   box-shadow: none;
 }
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
 .show > .btn-primary.dropdown-toggle {
   color: white;
-  background-color: #A31AFF;
-  border-color: #A31AFF;
+  background-color: #6FA491;
+  border-color: #6FA491;
   box-shadow: none;
 }
 a {
-  color: #6700ac;
+  color: #6FA491;
 }
 a:hover {
   text-decoration: none;
-  color: #A31AFF;
+  color: #243831;
 }
 .module-border-wrap {
   width: 175px;
   position: relative;
-  background: linear-gradient(to right, red, purple);
+  background:#6FA491;
   padding: 3px;
-  border-radius: 28px;
   margin: 0 auto;
   cursor: pointer;
 }
@@ -143,7 +144,6 @@ a:hover {
   background: #ffffff;
   color: #000000;
   padding: 0 25px;
-  border-radius: 25px;
   height: 170px;
   display: flex;
   align-items: center;
@@ -152,11 +152,13 @@ a:hover {
   height: 85px;
 }
 .module:hover {
-  -webkit-box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0 0 15px 5px #F2F4F3;
+  box-shadow: 0 0 15px 5px #F2F4F3;
+  background-color: #F2F4F3;
 }
+
 .module:hover img {
-  filter: drop-shadow(2px 4px 6px black);
+  filter: drop-shadow(2px 4px 6px #F2F4F3);
 }
 .product-suggested .title {
   font-size: 32px;
@@ -169,7 +171,7 @@ a:hover {
   width: 100%;
   height: 100%;
   position: relative;
-  background: linear-gradient(to right, red, purple);
+  background: linear-gradient(to right top, #6700ac, #F26C08);
   padding: 2px;
   border-radius: 28px;
 }
@@ -206,11 +208,5 @@ a:hover {
     width: 520px;
     font-size: 16px;
     font-weight: 600;
-  }
-}
-/* CSS Added with Thalinda */
-@media (max-width: 600px) {
-  .questions_options .module-border-wrap {
-    width: auto;
   }
 }

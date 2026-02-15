@@ -1,5 +1,3 @@
-@import "colors";
-
 .stepper-wrapper {
   margin-top: auto;
   display: flex;
@@ -12,12 +10,12 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
-
-  @media (max-width: 768px) {
+}
+@media (max-width: 768px) {
+  .stepper-item {
     font-size: 14px;
   }
 }
-
 .stepper-item::before {
   position: absolute;
   content: "";
@@ -27,7 +25,6 @@
   left: -50%;
   z-index: 2;
 }
-
 .stepper-item::after {
   position: absolute;
   content: "";
@@ -37,7 +34,6 @@
   left: 50%;
   z-index: 2;
 }
-
 .stepper-item .step-counter {
   position: relative;
   z-index: 5;
@@ -46,37 +42,46 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 20%;
-  background: #ccc;
+  background: white;
   margin-bottom: 6px;
-  color: white;
+  color: #6FA491;
   font-weight: 600;
+  transform:rotate(45deg);
+  border: 1px solid #6FA491;
+}
+
+.stepper-item .step-counter .step-counter-text{
+  transform:rotate(-45deg);
 }
 
 .stepper-item.active {
   font-weight: bold;
-  .step-counter{
-    //background-color: @colorB2;
-    background: linear-gradient(to right, red, purple);
-  }
 }
-
+.stepper-item.active .step-counter {
+  background: #6FA491;
+  transform:rotate(45deg);
+  color: #fff;
+}
+.stepper-item.active .step-counter .step-counter-text{
+  transform:rotate(-45deg);
+}
 .stepper-item.completed .step-counter {
-  //background-color: #4bb543;
-  //background-color: @colorB2;
-  background: linear-gradient(to right, red, purple);
+  background: #6FA491;
+  transform:rotate(45deg);
+  color: #fff;
 }
-
+.stepper-item.completed .step-counter .step-counter-text{
+  transform:rotate(-45deg);
+}
 .stepper-item.completed::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid @colorB2;
+  border-bottom: 2px solid #6FA491;
   width: 100%;
   top: 20px;
   left: 50%;
   z-index: 3;
 }
-
 .stepper-item:first-child::before {
   content: none;
 }

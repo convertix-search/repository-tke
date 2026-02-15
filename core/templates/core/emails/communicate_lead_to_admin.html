@@ -1,65 +1,31 @@
 {% extends 'core/emails/base.html' %}
 
-{% block title %}Neuer Lead{% endblock %}
+{% block title %}New Lead{% endblock %}
 
 {% block content %}
-    <p>Neuer Lead wurde registriert. Als nächstes finden Sie die Lead-Informationen:</p>
+    <p>A new Lead has been registered, here are the details:</p>
 
     <br>
 
-    <p style="font-weight: 600;">Kontaktinformation</p>
+    <p style="font-weight: 600;">Contact details</p>
 
     <table style="text-align: left; border: 1px solid #808080;">
         <thead>
             <tr>
-                <th style="border: 1px solid #808080; padding: 5px;">Feld</th>
-                <th style="border: 1px solid #808080; padding: 5px;">Antwort</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Field</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Answer</th>
             </tr>
         </thead>
 
         <tbody>
             <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Vorname</td>
+                <td style="border: 1px solid #808080; padding: 5px;">First name</td>
                 <td style="border: 1px solid #808080; padding: 5px;">{{ lead.first_name }}</td>
             </tr>
 
             <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Name</td>
+                <td style="border: 1px solid #808080; padding: 5px;">Last name</td>
                 <td style="border: 1px solid #808080; padding: 5px;">{{ lead.last_name }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">E-Mail</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.email }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Telefon</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.phone }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Straße</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.address }}</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">PLZ</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.postal_code }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Ort</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.location }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Datum</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ form.created }}</td>
-            </tr>
-
-            <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">IP Adresse</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{{ form.ip_address }}</td>
             </tr>
 
             {% if lead.gclid %}
@@ -69,30 +35,44 @@
                 </tr>
             {% endif %}
 
-            {% if lead.adgroup %}
-                <tr>
-                    <td style="border: 1px solid #808080; padding: 5px;">adgroup</td>
-                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.adgroup }}</td>
-                </tr>
-            {% endif %}
-
-            {% if lead.campaign %}
-                <tr>
-                    <td style="border: 1px solid #808080; padding: 5px;">campaign</td>
-                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.campaign }}</td>
-                </tr>
-            {% endif %}
-
-            {% if lead.keyword %}
-                <tr>
-                    <td style="border: 1px solid #808080; padding: 5px;">keyword</td>
-                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.keyword }}</td>
-                </tr>
-            {% endif %}
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Email</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.email }}</td>
+            </tr>
 
             <tr>
-                <td style="border: 1px solid #808080; padding: 5px;">Datenschutzbestimmung akzeptiert</td>
-                <td style="border: 1px solid #808080; padding: 5px;">{% if form.accept_privacy_policy %}Yes{% else %}No{% endif %}</td>
+                <td style="border: 1px solid #808080; padding: 5px;">Telephone number</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.phone }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">State</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.state }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">ZIP code</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.zip_code }}</td>
+            </tr>
+
+            <!-- <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Town</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.location }}</td>
+            </tr> -->
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Created</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.created }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">IP address</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.ip_address }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Approval of the privacy statement</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{% if form.accept_privacy_policy %}Si{% else %}No{% endif %}</td>
             </tr>
         </tbody>
     </table>
@@ -106,23 +86,17 @@
     <table style="text-align: left;">
         <thead>
             <tr>
-                <th style="border: 1px solid #808080; padding: 5px;">Frage</th>
-                <th style="border: 1px solid #808080; padding: 5px;">Antworten</th>
-                <th style="border: 1px solid #808080; padding: 5px;">Punkte</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Question</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Answer</th>
             </tr>
         </thead>
         <tbody>
             {% for answer in form.answers.all %}
                 <tr>
                     <td style="border: 1px solid #808080; padding: 5px;">{{ answer.question.name }}</td>
-                    <td style="border: 1px solid #808080; padding: 5px;">{{ answer.value }}</td>
-                    <td style="border: 1px solid #808080; padding: 5px;">{{ answer.points }}</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ answer.name }}</td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td colspan="2" style="font-weight: 600; border: 1px solid #808080; padding: 5px;">Gesamtpunktzahl</td>
-                <td style="font-weight: bold; border: 1px solid #808080; padding: 5px;">{{ form.total_points }}</td>
-            </tr>
 
         </tbody>
     </table>

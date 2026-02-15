@@ -1,31 +1,69 @@
 {% load static sekizai_tags %}
 <!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>TK Home solutions - lead form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'core/images/faviconV2.png' %}">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>TK Home solutions - Prepare a form for leads</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.accessbdd.com/wp-content/themes/access/dist/favicons/apple-touch-icon.png" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'core/css/loader.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/stepper.css' %}?v=4">
-    <link rel="stylesheet" href="{% static 'core/css/main.css' %}?v=2">
-    {% render_block 'css' %}
-</head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'core/css/loader.css' %}">
+        <link rel="stylesheet" href="{% static 'core/css/stepper.css' %}?v=4">
+        <link rel="stylesheet" href="{% static 'core/css/main.css' %}?v=5">
+        {% render_block 'css' %}
+
+        {% if form.add_gtm %}
+        {% endif %}
 
 
-<body>
+        <script>
+            (function(w,d,t,r,u) {
+                var f,n,i;
+                w[u]=w[u]||[],f=function() {
+                    var o={ti:"343094673", enableAutoSpaTracking: true};
+                    o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")
+                },
+                n=d.createElement(t),
+                n.src=r,
+                n.async=1,
+                n.onload=n.onreadystatechange=function() {
+                    var s=this.readyState;
+                    s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)
+                },
+                i=d.getElementsByTagName(t)[0],
+                i.parentNode.insertBefore(n,i)
+            })(window,document,"script","//bat.bing.com/bat.js","uetq");
+        </script>
 
-{% block content %}
+        <!-- Google Ads gtag script -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1034201120"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-1034201120');
+        </script>
+    </head>
 
-{% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-<script src="{% static 'core/js/main.js' %}"></script>
-{% render_block 'js' %}
+    <body>
+        {% if form.add_gtm %}
+        {% endif %}
 
-</body>
+        {% block content %}
+
+        {% endblock %}
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src="{% static 'core/js/main.js' %}"></script>
+        {% render_block 'js' %}
+
+    </body>
 
 </html>

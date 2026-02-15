@@ -6,16 +6,17 @@ from core.models import Lead, Answer, Form, Question, FormAnswered, FormContactP
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    search_fields = ('first_name', 'last_name', 'email', 'postal_code', 'phone')
-    list_display = ('first_name', 'last_name', 'address', 'postal_code', 'location', 'phone', 'email', 'gclid', 'created')
+    search_fields = ('first_name', 'last_name', 'email', 'phone',)
+    # list_display = ('first_name', 'last_name', 'phone', 'email', 'address', 'postal_code', 'location','state', 'zip_code', 'accept_privacy_policy', 'gclid', 'created')
+    list_display = ('first_name', 'last_name','phone', 'email','state', 'zip_code', 'accept_privacy_policy','additional_comments', 'gclid', 'created')
     list_filter = ('created', 'formanswered__form__subject')
 
 
 @admin.register(Form)
 class FormAdmin(admin.ModelAdmin):
     search_fields = ('name',)
-    list_display = ('id', 'name', 'subtitle', 'subject', 'contact_form_title', 'style', 'order', 'created')
-    list_filter = ('created',)
+    list_display = ('id', 'name', 'subtitle', 'subject', 'contact_form_title', 'add_gtm', 'style', 'order', 'created')
+    list_filter = ('created', 'add_gtm', 'style',)
     filter_horizontal = ('questions', 'contact_people',)
 
 

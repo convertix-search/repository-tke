@@ -3,44 +3,27 @@
 
 {% block content %}
 
+
     <div id="lead-form">
-
-        <div class="head">
-            <h4>{{ form_answered.form.name }}</h4>
-            <h5>{{ form_answered.form.subtitle}}</h5>
-        </div>
-
         <div class="body">
             <div class="container">
-
-                <div class="row mb-4">
-                    <div class="col">
-                        <img src="{% static 'core/images/confirm-styleB.png' %}" width="120" alt="confirmation Thyssenkrupp lead form">
+                <div class="d-flex align-items-center justify-content-center mb-5">
+                    <img src="{% static 'core/images/Access_Homeglide_Icons_Screen_RGB_standard-black.png' %}" class="mr-5" width="100" alt="confirmation Thyssenkrupp lead form">
+                    <div>
+                        <h3 class="mb-3" style="font-size: 20px;">Your request has been sent!</h3>
+                        <p class="mb-0" style="font-size: 18px;">We will contact you as soon as possible.</p>
                     </div>
                 </div>
-
-                <div class="row mb-3">
-                    <div class="col">
-                        <h3>Ihre Anfrage wurde erfolgreich versendet!</h3>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        Wir werden uns in Kürze bei Ihnen melden.
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 
-
-
     {% if form_answered.form.external_thank_you_page %}
         {% addtoblock 'js' %}
             <script>
-                window.top.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                setTimeout(function() {
+                    window.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                }, 1000);  // 1000 milliseconds (1 second) delay
             </script>
         {% endaddtoblock %}
     {% endif %}

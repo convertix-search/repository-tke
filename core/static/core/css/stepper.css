@@ -42,25 +42,39 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 20%;
-  background: #ccc;
+  background: white;
   margin-bottom: 6px;
-  color: white;
+  color: #6FA491;
   font-weight: 600;
+  transform:rotate(45deg);
+  border: 1px solid #6FA491;
+}
+.stepper-item .step-counter .step-counter-text{
+  transform:rotate(-45deg);
 }
 .stepper-item.active {
   font-weight: bold;
 }
 .stepper-item.active .step-counter {
-  background: linear-gradient(to right, red, purple);
+  background: #6FA491;
+  transform:rotate(45deg);
+  color: #fff;
+}
+.stepper-item.active .step-counter .step-counter-text{
+  transform:rotate(-45deg);
 }
 .stepper-item.completed .step-counter {
-  background: linear-gradient(to right, red, purple);
+  background: #6FA491;
+  transform:rotate(45deg);
+  color: #fff;
+}
+.stepper-item.completed .step-counter .step-counter-text{
+  transform:rotate(-45deg);
 }
 .stepper-item.completed::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #F26C08;
+  border-bottom: 2px solid #6FA491;
   width: 100%;
   top: 20px;
   left: 50%;
@@ -72,4 +86,3 @@
 .stepper-item:last-child::after {
   content: none;
 }
-/*# sourceMappingURL=stepper.css.map */
