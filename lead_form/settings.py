@@ -5,9 +5,9 @@ DEBUG = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'leadform',
-        'USER': 'leadform',
-        'PASSWORD': 'w495R5YfpVv7e8cs',
+        'NAME': 'leadformfrance',
+        'USER': 'leadformfrance',
+        'PASSWORD': 'w495R5YfpVv7e8csa',
     }
 }
 
@@ -23,27 +23,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/media')
 RAVEN_CONFIG = {
             }
 INSTALLED_APPS = INSTALLED_APPS + [
-                'raven.contrib.django.raven_compat',
                 ]
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
-        dsn="https://5ffcb6c94cc240b381a6075388f82858@o983718.ingest.sentry.io/6236001",
-        integrations=[DjangoIntegration()],
+    dsn="https://4c09e9cd74ca4c1c9cfaf5c82720bb23@o983718.ingest.sentry.io/6119367",
+    integrations=[DjangoIntegration()],
 
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
-        traces_sample_rate=0.1,
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=0.1,
 
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
 )
 
 ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
 ASIOSO_USER = 'hs_user'
 ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
-

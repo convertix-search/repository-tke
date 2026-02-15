@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 from core.utils import send_email
-from constance import config
 from requests.auth import HTTPBasicAuth
 from dict2xml import dict2xml
 from datetime import timezone
+from constance import config
 import requests
 
 
@@ -12,16 +12,15 @@ import requests
 
 class Form(models.Model):
     STYLE_A = 1
-    # STYLE_B = 2
     STYLES = [
         (STYLE_A, 'Style A'),
-        # (STYLE_B, 'Style B'),
     ]
 
     name = models.CharField(max_length=128)
     subtitle = models.CharField(max_length=128, blank=True)
     subject = models.CharField(max_length=128, blank=True)
     contact_form_title = models.CharField(max_length=128, blank=True)
+    contact_form_subtitle = models.CharField(max_length=240, blank=True)
     contact_form_button_title = models.CharField(max_length=128, blank=True)
     brand_name = models.CharField(max_length=128, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
@@ -30,7 +29,6 @@ class Form(models.Model):
     style = models.IntegerField(choices=STYLES, default=STYLE_A)
     contact_people = models.ManyToManyField('core.FormContactPerson', blank=True)
     external_thank_you_page = models.URLField(blank=True, null=True)
-    # country = models.IntegerField(choices=COUNTRIES, default=GERMANY)
 
     class Meta:
         verbose_name = 'Form'
@@ -78,23 +76,26 @@ class Answer(models.Model):
 # -------LEAD START
 
 class Lead(models.Model):
+    GENDER = [
+        ('man', 'Monsieur'),
+        ('women', 'Madame'),
+    ]
     first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
-    postal_code = models.CharField(max_length=16)
-    address = models.CharField(max_length=128)
-    location = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=64, blank=True)
+    postal_code = models.CharField(max_length=16, blank=True)
+    address = models.CharField(max_length=128, blank=True)
+    location = models.CharField(max_length=128, blank=True)
     phone = models.CharField(max_length=16)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
+    source = models.CharField(max_length=255, blank=True)
+    gender = models.CharField(choices=GENDER, max_length=5, default='man')
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     gclid = models.CharField(max_length=256, blank=True)
-    campaign = models.CharField(max_length=256, blank=True)
-    adgroup = models.CharField(max_length=256, blank=True)
-    keyword = models.CharField(max_length=256, blank=True)
 
     class Meta:
         verbose_name = 'Lead'
         verbose_name_plural = 'Leads'
-        ordering = ['created', 'first_name', 'last_name']
+        ordering = ['-created', 'first_name', 'last_name']
 
     def __str__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
@@ -124,7 +125,7 @@ class FormAnswered(models.Model):
             'form': self
         }
         send_email(
-            subject='%s: #%s Lead Form Widget' % (self.form.subject, self.id),
+            subject='%s: #%s Lead' % (self.form.subject, self.id),
             _from=config.FROM_EMAIL,
             to=managers,
             template='core/emails/communicate_lead_to_admin.html',
@@ -133,23 +134,21 @@ class FormAnswered(models.Model):
 
     def send_lead_by_api(self):
         data = {
-            'lead_id': self.lead.id,
+            'lead_id': 'widget ' + str(self.lead.id),
             'bought_at': self.created.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'lead_source_code': self.form.subject,
             'bought_at_unix': self.created.replace(tzinfo=timezone.utc).timestamp(),
             'offer_contact': {
                 'first_name': self.lead.first_name,
                 'last_name': self.lead.last_name,
                 'address': self.lead.address,
                 'zip_code': self.lead.postal_code,
-                'city': self.lead.location,
-                'country': 'Germany',
-                'country_code': 'de',
+                'country': 'France',
+                'country_code': 'fr',
                 'email': self.lead.email,
                 'phone': self.lead.phone,
+                'source': self.lead.source,
             },
         }
-
         if self.lead.gclid:
             data['lead_id'] = 'widget - %s' % self.lead.gclid
 

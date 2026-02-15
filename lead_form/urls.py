@@ -24,10 +24,9 @@ from core import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('forms/<int:form_id>/thank-you/', views.thank_you, name='thank_you'),
-    path('unbounce-lead/', views.unbounce_lead, name='unbounce_lead'),
-    path('unbounce-lead/italy/', views.unbounce_lead_italy, name='unbounce_lead_italy'),
-    path('unbounce-lead/netherlands/', views.unbounce_lead_netherlands, name='unbounce_lead_netherlands'),
+    path('unbounce-lead/', views.unbounce_lead, name='unbounce_lead_fr'),
     path('', views.index, name='index'),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
