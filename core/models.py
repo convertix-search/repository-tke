@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 from core.utils import send_email
-from constance import config
 from requests.auth import HTTPBasicAuth
 from dict2xml import dict2xml
 from datetime import timezone
+from constance import config
 import requests
 
 
@@ -12,10 +12,15 @@ import requests
 
 class Form(models.Model):
     STYLE_A = 1
-    # STYLE_B = 2
     STYLES = [
         (STYLE_A, 'Style A'),
-        # (STYLE_B, 'Style B'),
+    ]
+
+    STANDARD = 1
+    BOOKING = 2
+    TYPES = [
+        (STANDARD, 'standard'),
+        (BOOKING, 'booking'),
     ]
 
     name = models.CharField(max_length=128)
@@ -28,9 +33,13 @@ class Form(models.Model):
     questions = models.ManyToManyField('core.Question', blank=True)
     order = models.IntegerField(default=0)
     style = models.IntegerField(choices=STYLES, default=STYLE_A)
+    type = models.IntegerField(choices=TYPES, default=STANDARD)
     contact_people = models.ManyToManyField('core.FormContactPerson', blank=True)
     external_thank_you_page = models.URLField(blank=True, null=True)
-    # country = models.IntegerField(choices=COUNTRIES, default=GERMANY)
+    thank_you_title = models.CharField(blank=True, max_length=200)
+    thank_you_text = models.TextField(blank=True, max_length=2000)
+    thank_you_image = models.ImageField(null=True, blank=True, upload_to='thankyou/')
+    add_gtm = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Form'
@@ -45,6 +54,10 @@ class Question(models.Model):
     name = models.CharField(max_length=128)
     order = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    special = models.BooleanField(u'Tipo escalera', default=False)
+    special2 = models.BooleanField(u'Ubicación escalera', default=False)
+    postal_code_type = models.BooleanField(u'Es de tipo código postal', default=False)
+    calendar_type = models.BooleanField(u'Es de tipo calendario', default=False)
 
     class Meta:
         verbose_name = 'Question'
@@ -54,6 +67,17 @@ class Question(models.Model):
     def __str__(self):
         return u'{}'.format(self.name)
 
+class QuestionProgress(models.Model):
+    form = models.ForeignKey(Form, on_delete=models.CASCADE)
+    answered_question_count = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Question Progress'
+        verbose_name_plural = 'Question Progress'
+
+    def __str__(self):
+        return f'Progress for Form {self.form.id}'
 
 class Answer(models.Model):
     name = models.CharField(max_length=128)
@@ -79,22 +103,22 @@ class Answer(models.Model):
 
 class Lead(models.Model):
     first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
-    postal_code = models.CharField(max_length=16)
-    address = models.CharField(max_length=128)
-    location = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=64, blank=True)
+    postal_code = models.CharField(max_length=16, blank=True)
+    address = models.CharField(max_length=128, blank=True)
+    location = models.CharField(max_length=128, blank=True)
     phone = models.CharField(max_length=16)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     gclid = models.CharField(max_length=256, blank=True)
-    campaign = models.CharField(max_length=256, blank=True)
-    adgroup = models.CharField(max_length=256, blank=True)
-    keyword = models.CharField(max_length=256, blank=True)
+    date1 = models.DateField(null=True, blank=True)
+    date2 = models.DateField(null=True, blank=True)
+    date3 = models.DateField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Lead'
         verbose_name_plural = 'Leads'
-        ordering = ['created', 'first_name', 'last_name']
+        ordering = ['-created', 'first_name', 'last_name']
 
     def __str__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
@@ -123,28 +147,33 @@ class FormAnswered(models.Model):
             'lead': self.lead,
             'form': self
         }
+
+        subject = '%s: #%s Lead Form Widget' % (self.form.subject, self.id)
+        template = 'core/emails/communicate_lead_to_admin.html'
+        if self.form.type == Form.BOOKING:
+            subject = '%s: #%s Booking Form Widget' % (self.form.subject, self.id)
+            template = 'core/emails/communicate_booking_to_admin.html'
+
         send_email(
-            subject='%s: #%s Lead Form Widget' % (self.form.subject, self.id),
+            subject=subject,
             _from=config.FROM_EMAIL,
             to=managers,
-            template='core/emails/communicate_lead_to_admin.html',
+            template=template,
             context=context
         )
 
     def send_lead_by_api(self):
         data = {
-            'lead_id': self.lead.id,
+            'lead_id': 'widget ' + str(self.lead.id),
             'bought_at': self.created.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'lead_source_code': self.form.subject,
             'bought_at_unix': self.created.replace(tzinfo=timezone.utc).timestamp(),
             'offer_contact': {
                 'first_name': self.lead.first_name,
                 'last_name': self.lead.last_name,
                 'address': self.lead.address,
                 'zip_code': self.lead.postal_code,
-                'city': self.lead.location,
-                'country': 'Germany',
-                'country_code': 'de',
+                'country': 'Spain',
+                'country_code': 'es',
                 'email': self.lead.email,
                 'phone': self.lead.phone,
             },

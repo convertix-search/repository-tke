@@ -1,0 +1,144 @@
+@import "colors";
+
+.calendar{
+  ul {list-style-type: none;}
+
+  .alert-light {
+    color: @color4;
+    background-color: @colorB3;
+    border-color: @colorB3;
+    margin: 0 auto;
+  }
+
+  .dates-error-msg{
+    margin: 0 auto 20px auto;
+  }
+
+  /* Month header */
+  .month {
+    margin: 0 auto;
+    padding-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  table.calendar{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .table-bordered thead th{
+    color: white;
+    width: 14.2%;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .table-bordered td {
+    background-color: white;
+    height: 40px;
+    padding: 5px;
+    font-size: 14px;
+    vertical-align: middle;
+    &.selected{
+      background-color: @color8;
+    }
+
+    &.weekend{
+      background-color: @color7;
+    }
+
+    &.past{
+      background-color: #c4c4c4;
+      font-style: italic;
+      text-decoration: line-through;
+      text-decoration-thickness: .2rem;
+    }
+
+    &.different-month{
+      background-color: @colorB3;
+    }
+
+
+  }
+
+  /* Month list */
+  .month ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .month ul li {
+    color: @color4;
+    font-size: 18px;
+    text-transform: capitalize;
+  }
+
+  /* Previous button inside month header */
+  .month .prev {
+    float: left;
+    font-size: 14px;
+    //padding-top: 10px;
+  }
+
+  /* Next button */
+  .month .next {
+    float: right;
+    font-size: 14px;
+
+    //padding-top: 10px;
+  }
+
+  /* Weekdays (Mon-Sun) */
+  .weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color:@colorB2;
+  }
+
+  .weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: @color5;
+    text-align: center;
+  }
+
+  /* Days (1-31) */
+  .days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+  }
+
+  .days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:12px;
+    color: #777;
+  }
+
+  /* Highlight the "current" day */
+  .days li .active {
+    padding: 5px;
+    background: #1abc9c;
+    color: white !important
+  }
+}
+
+@media (min-width: 576px){
+  .calendar{
+    .table-bordered thead th{
+      padding: 12px;
+      font-size: 18px;
+    }
+
+    .table-bordered td {
+      font-size: 16px;
+    }
+  }
+}

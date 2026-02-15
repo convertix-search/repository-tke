@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Data</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="">
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+   
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">LeadForm Spain</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Home</a>
+                    </li>
+                </ul>
+               
+            </div>
+            <form class="d-flex">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        Welcome, {{ user.username|upper }}!
+                    </li>
+                </ul> </form>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Progress Data</h1>
+        <table id="progressTable" class="table">
+            <thead>
+                <tr>
+                    <th>Form ID</th>
+                    <th>Answered Questions</th>
+                    <th>Total Questions</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Progress data will be dynamically added here -->
+            </tbody>
+        </table>
+        <h2>Overall Progress</h2>
+        <table id="overallProgressTable" class="table">
+            <thead>
+                <tr>
+                    <th>Form ID</th>
+                    <th>Overall Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Overall progress data will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include jQuery and DataTables JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Retrieve the progress data
+            // progress-data
+
+        
+        const formId = $("#form_id").val();
+         fetch('/progress-data', {
+                method: 'GET',
+                headers: {
+                'Content-Type': 'application/json',
+                // Add any other required headers
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                // Handle the response data
+                console.log(data);
+                var progressData = data;
+              
+              // Populate progress data table
+              var progressTable = $('#progressTable').DataTable({
+                  data: progressData.progress_data,
+                  columns: [
+                      { data: 'form_id' },
+                      { data: 'answered_question_count' },
+                      { data: 'total' },
+                      { data : 'progress'}
+                  ]
+              });
+  
+              // Populate overall progress data table
+              var overallProgressTable = $('#overallProgressTable').DataTable({
+    data: progressData.overall_progress,
+    columns: [
+        { data: 'form_id' },
+        {
+            data: 'overall_progress',
+            render: function (data) {
+                return parseFloat(data).toFixed(2);
+            }
+        }
+    ]
+});
+                })
+                .catch((error) => {
+                // Handle any errors
+                console.error('Error:', error);
+                });
+            });    
+           
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+{% load sekizai_tags static %}
+
+{% addtoblock 'css' %}
+    <link rel="stylesheet" href="{% static 'core/css/calendar.css' %}?v=8">
+{% endaddtoblock %}
+
+<div class="calendar">
+
+{#    <div class="alert alert-light mb-4 w-100" style="max-width: 500px;">#}
+{#        Te llamaremos para confirmar una de las opciones seleccionadas y la hora exacta#}
+{#    </div>#}
+
+    <div id="month" class="mb-4">
+        {% include 'core/block/month.html' %}
+    </div>
+
+    <input type="hidden" class="input-dates" name="dates">
+
+    <div class="alert alert-danger mb-4 w-100 dates-error-msg"
+         style="max-width: 500px; display: none;">
+        Para continuar debes elegir tres posibles fechas
+    </div>
+
+    <button class="btn btn-primary showNext need_validation calendar"
+            type="button">
+        Siguiente
+    </button>
+</div>
+
+{% addtoblock 'js' %}
+    <script>
+        let dates_selected = [];
+        const input_dates = document.getElementById('dates');
+
+        function remove_date(date){
+            for(let i = 0; i < dates_selected.length; i++){
+                if (dates_selected[i] === date) {
+                    dates_selected.splice(i, 1);
+                }
+            }
+        }
+
+        function paint_selected_dates(){
+            $('.day.selected').removeClass('selected')
+            for(let i=0; i<dates_selected.length; i++){
+                $('.' + dates_selected[i]).addClass('selected')
+            }
+        }
+
+        function select_date(element, date){
+            if(!$(element).hasClass('different-month')){
+                if($(element).hasClass('selected') && dates_selected.includes(date)){
+                    remove_date(date)
+                }else{
+                    if (dates_selected.length < 3){
+                        dates_selected.push(date)
+                    }
+                }
+
+                {#dates_selected.push(date)#}
+                paint_selected_dates();
+            }
+        }
+
+        function get_month(year, month){
+            $.get("{% url 'get_month_calendar' %}", {year:year, month:month}, function( data ) {
+                $("#month").empty().html(data);
+                paint_selected_dates();
+            });
+        }
+
+        function previous_month(year, month){
+            if (month === 1){
+                month = 12;
+                year = year - 1
+            }else{
+                month = month - 1
+            }
+            get_month(year, month)
+        }
+
+        function next_month(year, month){
+            console.log(month);
+            console.log(year);
+            if (month === 12){
+                month = 1;
+                year = year + 1
+            }else{
+                month = month + 1
+            }
+            get_month(year, month)
+        }
+    </script>
+{% endaddtoblock %}
+

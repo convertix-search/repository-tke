@@ -1,35 +1,66 @@
 {% extends 'core/base.html' %}
 {% load static sekizai_tags %}
 
+{% block gtm_conversion %}
+    {% if form.add_gtm %}
+        <!-- Event snippet for Calendar Lead conversion page -->
+        <script>
+            gtag('event', 'conversion', {'send_to': 'AW-1060429618/3ucECMj0o5UYELK-0_kD'});
+        </script>
+    {% endif %}
+{% endblock %}
+
+
 {% block content %}
 
-    <div id="lead-form">
+    <div id="lead-form" style="height: 100%;">
 
-        <div class="head">
-            <h4>{{ form_answered.form.name }}</h4>
-            <h5>{{ form_answered.form.subtitle}}</h5>
-        </div>
+        {#        <div class="head">#}
+        {#            <div class="container">#}
+        {#                <h4>{{ form_answered.form.name }}</h4>#}
+        {#                <h5>{{ form_answered.form.subtitle}}</h5>#}
+        {#            </div>#}
+        {#        </div>#}
 
-        <div class="body">
+        <div class="body d-flex align-items-center" style="height: 100%;">
             <div class="container">
 
-                <div class="row mb-4">
-                    <div class="col">
-                        <img src="{% static 'core/images/confirm-styleB.png' %}" width="120" alt="confirmation Thyssenkrupp lead form">
-                    </div>
-                </div>
+                {% if form.thank_you_title or form.thank_you_text or form.thank_you_image %}
+                    {% include 'core/chair-types/custom.html' with form=form %}
 
-                <div class="row mb-3">
-                    <div class="col">
-                        <h3>Ihre Anfrage wurde erfolgreich versendet!</h3>
-                    </div>
-                </div>
+                {% else %}
 
-                <div class="row">
-                    <div class="col">
-                        Wir werden uns in Kürze bei Ihnen melden.
+                    <div class="d-flex align-items-center justify-content-center mb-5">
+                        <img src="{% static 'core/images/confirm-styleB.png' %}" class="mr-5" width="100" alt="confirmation Thyssenkrupp lead form">
+                        <div>
+                            <h3 class="mb-3" style="font-size: 20px;">¡Su solicitud ha sido enviada con éxito!</h3>
+                            <p class="mb-0" style="font-size: 18px;">Te contactaremos lo antes posible.</p>
+                        </div>
                     </div>
-                </div>
+
+                    {% if type.value == 'Recta' and location.value == 'Interior' %}
+                        {% include 'core/chair-types/s100.html' %}
+
+                    {% elif type.value == 'Recta' and location.value == 'Exterior' %}
+                        {% include 'core/chair-types/s100.html' %}
+
+                    {% elif type.value == 'Recta' and location.value == 'no_lo_se' %}
+                        {% include 'core/chair-types/s100.html' %}
+
+                    {% elif type.value == 'no_lo_se' and location.value == 'Exterior' %}
+                        {% include 'core/chair-types/s100.html' %}
+
+                    {% elif type.value == 'Curva' and location.value == 'Interior' %}
+                        {% include 'core/chair-types/s200.html' %}
+
+                    {% elif type.value == 'Curva' and location.value == 'no_lo_se' %}
+                        {% include 'core/chair-types/s200.html' %}
+
+                    {% elif type.value == 'no_lo_se' and location.value == 'Interior' %}
+                        {% include 'core/chair-types/s200.html' %}
+                    {% endif %}
+
+                {% endif %}
 
             </div>
         </div>
@@ -37,10 +68,15 @@
 
 
 
-    {% if form_answered.form.external_thank_you_page %}
+
+    {% if form.external_thank_you_page %}
         {% addtoblock 'js' %}
             <script>
-                window.top.location.href = "{{ form_answered.form.external_thank_you_page }}";
+                {% if form.id == 10 or form.id == 11 or form.id == 12 %}
+                    window.location.href = "{{ form.external_thank_you_page }}?type={{ type.value }}&location={{ location.value }}";
+                {% else%}
+                    window.top.location.href = "{{ form.external_thank_you_page }}?type={{ type.value }}&location={{ location.value }}";
+                {% endif %}
             </script>
         {% endaddtoblock %}
     {% endif %}

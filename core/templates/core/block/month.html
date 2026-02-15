@@ -1,0 +1,41 @@
+{% load core %}
+
+<div class="month">
+    <ul>
+        {% if previous %}
+            <li class="prev" onclick="previous_month({{ year }}, {{ month_number }})"
+                style="cursor: pointer;">&#10094;</li>
+        {% endif %}
+        <li class="next" onclick="next_month({{ year }}, {{ month_number }})"
+            style="cursor: pointer;">&#10095;</li>
+        <li>{{ month_name }} {{ year }}</li>
+    </ul>
+</div>
+
+<table class="table table-bordered calendar">
+    <thead>
+        <tr class="weekdays">
+            {% for week_day in week_days %}
+                <th>{{ week_day }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for week in month %}
+            <tr class="days">
+                {% for day in week %}
+                    {% with is_different_month=day|is_different_month:month_number is_past=day|is_past is_weekend=day|is_weekend %}
+                        <td class="day {{ day|date:'Y-m-d' }} {% if is_different_month %}different-month{% endif %} {% if is_past %}past{% endif %} {% if is_weekend %}weekend{% endif %}"
+                            {% if not is_different_month and not is_past and not is_weekend %}onclick="select_date(this, '{{ day|date:'Y-m-d' }}')"{% endif %}
+                            style="cursor: pointer;">
+                            {% if not is_different_month %}
+                                {{ day|date:'d' }}
+                            {% endif %}
+                        </td>
+                    {% endwith %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

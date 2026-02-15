@@ -5,5 +5,13 @@ from core.models import Lead
 class LeadForm(ModelForm):
     class Meta:
         model = Lead
-        fields = ['first_name', 'last_name', 'postal_code', 'address', 'location', 'phone', 'email', 'gclid', 'adgroup', 'keyword', 'campaign']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'gclid']
+
+
+class BookingLeadForm(ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['first_name', 'last_name', 'phone', 'email', 'gclid',
+                  'postal_code', 'date1', 'date2', 'date3']
+
 

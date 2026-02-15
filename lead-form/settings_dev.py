@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -129,11 +129,6 @@ MEDIA_URL = '/media/'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_CONFIG = {
-    'MANAGER_EMAILS': (
-        'info.encasa-de@tkelevator.com',
-        'Email from managers separated by comma',
-        str
-    ),
     'FROM_EMAIL': (
         'info.encasa-de@tkelevator.com',
         u'Email address from which the system will send the emails',
@@ -144,20 +139,16 @@ CONSTANCE_CONFIG = {
 EMAIL_HOST = 'in-v3.mailjet.com'
 EMAIL_PORT = 587
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'e18209e75c64ac13a7c3a70abbc37b80'
-EMAIL_HOST_PASSWORD = '5c05557b967245036c1d4edf7bd87610'
-
-# ASIOSO_API = 'https://asioso-hspre.tke-stage.com/save'
-# ASIOSO_USER = 'apiUser'
-# ASIOSO_PASSWORD = 'apiUser123#'
-
-ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
-ASIOSO_USER = 'hs_user'
-ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
+EMAIL_HOST_USER = '31cc14ee5abeab4fb4fd8b36e4c79f06'
+EMAIL_HOST_PASSWORD = 'c7fe5ee995ee734d0008ea4e12805da2'
 
 
-# ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
-# ASIOSO_USER = 'hs_user'
-# ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
+# EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+# EMAIL_HOST_USER = 'c9de7f7def7bd7'
+# EMAIL_HOST_PASSWORD = 'e18a8d218b147c'
+# EMAIL_PORT = '2525'
 
+ASIOSO_API = 'https://asioso-hspre.tke-stage.com/save'
+ASIOSO_USER = 'apiUser'
+ASIOSO_PASSWORD = 'apiUser123#'
 

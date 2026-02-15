@@ -24,9 +24,12 @@ from core import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('forms/<int:form_id>/thank-you/', views.thank_you, name='thank_you'),
+    path('questions-progress/<int:form_id>', views.save_progress_api, name='save_progress'),
+    path('progress-add/<int:progress_id>', views.increment_answered_question_count, name='update_progress'),
+    path('progress-data/', views.get_all_progress_data, name='progress-data'),
+    path('admin/progress-view/', views.progress_data, name='progress-data-get'),
     path('unbounce-lead/', views.unbounce_lead, name='unbounce_lead'),
-    path('unbounce-lead/italy/', views.unbounce_lead_italy, name='unbounce_lead_italy'),
-    path('unbounce-lead/netherlands/', views.unbounce_lead_netherlands, name='unbounce_lead_netherlands'),
+    path('calendar/', views.get_month_calendar, name='get_month_calendar'),
     path('', views.index, name='index'),
 ]
 

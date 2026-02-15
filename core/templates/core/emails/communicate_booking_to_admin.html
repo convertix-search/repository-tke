@@ -1,0 +1,92 @@
+{% extends 'core/emails/base.html' %}
+
+{% block title %}Nueva cita{% endblock %}
+
+{% block content %}
+    <p>Se ha registrado una nueva cita, a continuación mostramos su información:</p>
+
+    <br>
+
+    <p style="font-weight: 600;">Información de contacto</p>
+
+    <table style="text-align: left; border: 1px solid #808080;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #808080; padding: 5px;">Campo</th>
+                <th style="border: 1px solid #808080; padding: 5px;">Respuesta</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Nombre</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.first_name }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Apellidos</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.last_name }}</td>
+            </tr>
+
+            {% if lead.gclid %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">gclid</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.gclid }}</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Email</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.email }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Teléfono</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.phone }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Código postal</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.postal_code }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Fecha</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.created }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Dirección IP</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ form.ip_address }}</td>
+            </tr>
+
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Aceptación política privacidad</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{% if form.accept_privacy_policy %}Si{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <p style="font-weight: 600;">Fechas solicitadas</p>
+
+    <table style="text-align: left;">
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Fecha 1</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.date1|date:'d/m/Y' }}</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Fecha 2</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.date2|date:'d/m/Y' }}</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #808080; padding: 5px;">Fecha 3</td>
+                <td style="border: 1px solid #808080; padding: 5px;">{{ lead.date3|date:'d/m/Y' }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+{% endblock %}

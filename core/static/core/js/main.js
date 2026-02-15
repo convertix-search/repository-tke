@@ -1,7 +1,6 @@
 jQuery(function($) {
     let carouselWrap = $('.carousel');
     let loaderWrap = $('#loader');
-    let endLoaderWrap = $('#end-loader');
     let contactDataWrap = $('#contact-data') ;
     let leadForm = $('#leadForm');
 
@@ -9,37 +8,37 @@ jQuery(function($) {
     $('.showNext').click(function() {
         let stepWrap = $(this).closest('.step');
         let step = stepWrap.attr('data-step');
-        let nextstep = parseInt(step) + 1;
-        let nextstepWrap = $('.step' + nextstep);
 
-        let answer_selected = $(this).attr('data-val');
-        $(stepWrap).find('.answer').val(answer_selected);
+        if($(this).hasClass('calendar')){
+            if (dates_selected.length < 3){
+                $(stepWrap).find('.dates-error-msg').show();
+                return;
+            }
 
-        if($(nextstepWrap).length) {
-            $(stepWrap).hide();
-            $(stepWrap).removeClass('active');
-            $(carouselWrap).find('.step' + nextstep).show();
+            $(stepWrap).find('.input-dates').val(dates_selected.join());
         }
 
-        update_stepper(parseInt(step));
+        if($(this).hasClass('need_validation')){
+            let inputs = stepWrap.find('input');
+            for(let i=0; i<inputs.length; i++){
 
-    });
+                if(!$(inputs[i]).val()){
+                    $('#btn-submit').click();
+                    return;
+                }
+            }
+        }
 
-    $('.showLoader').click(function() {
+        let nextstep = parseInt(step) + 1;
         let answer_selected = $(this).attr('data-val');
-        $(this).closest('.step').find('.answer').val(answer_selected);
-        $('.step').hide();
-        $(loaderWrap).show();
+        if (answer_selected){
+            $(stepWrap).find('.answer').val(answer_selected);
+        }
+        $(stepWrap).hide();
+        $(stepWrap).removeClass('active');
+        $(carouselWrap).find('.step' + nextstep).show();
 
-        setTimeout(function(){
-            $(loaderWrap).hide();
-            $(endLoaderWrap).show();
-
-            setTimeout(function(){
-                $(endLoaderWrap).hide();
-                $(contactDataWrap).show();
-            }, 1500);
-        }, 1500);
+        update_stepper(parseInt(step));
     });
 
     $(leadForm).submit(function (){
@@ -59,4 +58,8 @@ jQuery(function($) {
         });
     }
 
+
+
+
 });
+

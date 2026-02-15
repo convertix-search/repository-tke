@@ -1,7 +1,10 @@
-import datetime
-
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+import datetime
+
+WEEK_DAYS = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']
+MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+          'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 
 def send_email(subject, _from, to, template, context, cc=None, bcc=None, reply_to=None):
@@ -11,7 +14,7 @@ def send_email(subject, _from, to, template, context, cc=None, bcc=None, reply_t
     email.send(fail_silently=True)
 
 
-def parseDate(date, time):
+def parse_date(date, time):
     time = convert24(time)
     date = date + 'T' + time[:5]
     date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M')
@@ -37,4 +40,3 @@ def convert24(str1):
 
         # add 12 to hours and remove PM
         return str(int(str1[:2]) + 12) + str1[2:8]
-
