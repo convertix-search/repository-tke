@@ -1,0 +1,88 @@
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Regular.woff2);
+  font-weight: normal;
+}
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-RegularItalic.woff2);
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Light.woff2);
+  font-weight: 400;
+}
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-LightItalic.woff2);
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Bold.woff2);
+  font-weight: bold;
+}
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-BoldItalic.woff2);
+  font-weight: bold;
+  font-style: italic;
+}
+body {
+  background-color: #C4C4C4;
+}
+html,
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: tkefont, serif;
+}
+#lead-form .head {
+  background: #434343;
+}
+#lead-form .body {
+  background: #C4C4C4;
+}
+.btn-primary {
+  background: #7000BD;
+  border-color: #7000BD;
+  color: white;
+}
+.btn-primary:hover {
+  background: #A31AFF;
+  border-color: #A31AFF;
+}
+.btn-primary:focus {
+  background: #A31AFF;
+  border-color: #A31AFF;
+  box-shadow: none;
+}
+.btn-primary:active {
+  background: #A31AFF;
+  border-color: #A31AFF;
+  box-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: white;
+  background-color: #A31AFF;
+  border-color: #A31AFF;
+  box-shadow: none;
+}
+a {
+  color: #7000BD;
+}
+a:hover {
+  text-decoration: none;
+  color: #A31AFF;
+}
+/*# sourceMappingURL=styleB.css.map */

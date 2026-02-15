@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% load static sekizai_tags %}
+
+{% block content %}
+
+    <div id="lead-form">
+
+        <div class="head">
+            <h4>{{ form_answered.form.name }}</h4>
+            <h5>{{ form_answered.form.subtitle}}</h5>
+        </div>
+
+        <div class="body">
+            <div class="container">
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <img src="{% static 'core/images/confirm-styleB.png' %}" width="120" alt="confirmation Thyssenkrupp lead form">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <h3>Ihre Anfrage wurde erfolgreich versendet!</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        Wir werden uns in Kürze bei Ihnen melden.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    {% if form_answered.form.external_thank_you_page %}
+        {% addtoblock 'js' %}
+            <script>
+                window.top.location.href = "{{ form_answered.form.external_thank_you_page }}";
+            </script>
+        {% endaddtoblock %}
+    {% endif %}
+
+{% endblock %}

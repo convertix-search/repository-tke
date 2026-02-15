@@ -1,0 +1,101 @@
+// STYLE B
+@colorB1: #434343;
+@colorB2: #F26C08;
+@colorB3: #C4C4C4;
+@colorB4: #7000BD;
+@colorB5: #A31AFF;
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Regular.woff2);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-RegularItalic.woff2);
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Light.woff2);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-LightItalic.woff2);
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-Bold.woff2);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: tkefont;
+  src: url(../fonts/TKETypeMono-BoldItalic.woff2);
+  font-weight: bold;
+  font-style: italic;
+}
+
+body {
+  background-color: @colorB3;
+}
+
+html, body, p, h1, h2, h3, h4, h5, h6{
+  //font-family: Montserrat Regular, serif;
+  font-family: tkefont, serif;
+}
+
+#lead-form .head{
+  background: @colorB1;
+}
+
+#lead-form .body {
+  background: @colorB3;
+}
+
+.btn-primary {
+  background: @colorB4;
+  border-color: @colorB4;
+  color: white;
+
+  &:hover{
+    background: @colorB5;
+    border-color: @colorB5;
+  }
+
+  &:focus{
+    background: @colorB5;
+    border-color: @colorB5;
+    box-shadow: none;
+  }
+
+  &:active{
+    background: @colorB5;
+    border-color: @colorB5;
+    box-shadow: none;
+  }
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: white;
+  background-color: @colorB5;
+  border-color: @colorB5;
+  box-shadow: none;
+}
+
+a {
+  color: @colorB4;
+  &:hover{
+    text-decoration: none;
+    color: @colorB5;
+  }
+}
+
