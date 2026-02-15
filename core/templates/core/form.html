@@ -2,18 +2,21 @@
 {% load static sekizai_tags %}
 
 {% block content %}
-
     <div id="lead-form">
 
         <div class="head">
-            <h4>{{ form.name }}</h4>
-            <h5>{{ form.subtitle}}</h5>
+            <div class="container">
+                <h4 class="mb-2 main-title">{{ form.name }}</h4>
+                <h4 class="mb-2 contact-title" style="display: none;">{{ form.contact_title }}</h4>
+                <h5 class="mb-0 main-title">{{ form.subtitle}}</h5>
+                <h5 class="mb-0 contact-title" style="display: none;">{{ form.contact_subtitle}}</h5>
+            </div>
         </div>
 
         <div class="body">
             <div class="container">
 
-                <div class="stepper-wrapper d-none d-md-flex">
+                <div class="stepper-wrapper d-none d-lg-flex">
                     {% for question in form.questions.all %}
                         <div class="stepper-item {% if forloop.first %}active{% endif %}">
                             <div class="step-counter">{{ forloop.counter }}</div>
@@ -35,7 +38,7 @@
                                 <div class="step step{{ forloop.counter }} {% if forloop.first %}active{% endif %}"
                                      data-step="{{ forloop.counter }}" {% if not forloop.first %}style="display: none{% endif %}">
 
-                                    <div class="row mb-3">
+                                    <div class="row mb-4">
                                         <div class="col">
                                             <h3>{{ forloop.counter }}. {{ question.name }}</h3>
                                         </div>
@@ -44,7 +47,7 @@
                                     <div class="row justify-content-center questions_options">
                                         {% for answer in question.answer_set.all %}
                                         <div class="col-6 col-sm-auto mb-4">
-                                                <div class="module-border-wrap {% if forloop.parentloop.last %}showLoader{% else %}showNext{% endif %}" data-val="{{ answer.id }}">
+                                                <div class="module-border-wrap showNext" data-val="{{ answer.id }}">
                                                     <div class="module">
                                                         <div class="text-center w-100">
                                                             <img src="{{ answer.image.url }}" class="w-100 mb-3 w3-hover-opacity" style="object-fit: contain;" alt=""/>
@@ -60,6 +63,54 @@
 
                             {% endfor %}
 
+                            <div id="contact-data" class="px-2 step step{{ form.questions.count|add:1 }}" data-step="{{ form.questions.count|add:1 }}" style="display: none;">
+                                <input type="hidden" id="input_gclid" name="gclid">
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <h3>{{ form.contact_form_title }}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control mb-3" name="first_name" placeholder="Fornavn*" required/>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control mb-3" name="last_name" placeholder="Etternavn*" required/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control mb-3" name="phone" placeholder="Telefonnummer*" required/>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="email" class="form-control mb-3" name="email" placeholder="E-post*" required />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control mb-3" name="county" placeholder="Fylke*" required/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col text-left">
+                                        <label class="accept-terms">
+                                            <input type="checkbox" class="konfAcceptTerms mr-1" name="accept_privacy_policy" value="1" required/>
+                                            Jeg har lest og forstått <a href="https://homesolutions.tkelevator.com/no-no/om-oss/personvernerkl%C3%A6ring/" target="_blank">personvernerklæringen</a>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <button class="btn btn-primary btn-lg btn-submit" type="submit">
+                                            {{ form.contact_form_button_title }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div id="loader" style="display: none;">
                                 <div class="row mb-4">
                                     <div class="col">
@@ -71,83 +122,6 @@
                                         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div id="end-loader" style="display: none;">
-                                <div class="row mb-4">
-                                    <div class="col">
-                                        <h3>Es wurden mehrere Berater gefunden!</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="circleBg d-flex justify-content-center align-items-center">
-                                            <img src="https://lp.thyssenkrupp-trapliften.be/assets/images/icons/ja.png" alt=""/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="contact-data" style="display: none;">
-                                <input type="hidden" id="input_gclid" name="gclid">
-                                <input type="hidden" id="input_campaign" name="campaign">
-                                <input type="hidden" id="input_adgroup" name="adgroup">
-                                <input type="hidden" id="input_keyword" name="keyword">
-
-                                <div class="row mb-4">
-                                    <div class="col">
-                                        <h3>{{ form.contact_form_title }}</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="first_name" placeholder="Vorname*" required/>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="last_name" placeholder="Nachname*" required/>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="address" placeholder="Adresse*" required />
-                                    </div>
-                                    <div class="col-12 col-sm-3">
-                                        <input type="text" class="form-control mb-3" name="postal_code"  placeholder="Postleitzahl*" required />
-                                    </div>
-                                    <div class="col-12 col-sm-3 pl-sm-0">
-                                        <input type="text" class="form-control mb-3" name="location" placeholder="Ort*" required />
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="phone" placeholder="Telefonnummer*" required />
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control mb-3" name="email" placeholder="E-Mail*" required />
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col text-left">
-                                        <label class="accept-terms">
-                                            <input type="checkbox" class="konfAcceptTerms mr-1" name="accept_privacy_policy" value="1" required/>
-                                            Ich habe die {{ form.brand_name }} <a href="https://www.tke-homesolutions.de/datenschutz/" target="_blank">‘Datenschutzbestimmungen’</a> gelesen und akzeptiert
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <button class="btn btn-primary btn-lg btn-submit" type="submit">
-                                            {#                                        <span class="d-block d-sm-none">Fordern Sie ein kostenloses<br>und unverbindliches Angebot an</span>#}
-                                            {#                                        <span class="d-none d-sm-block">Fordern Sie ein kostenloses und unverbindliches Angebot an</span>#}
-                                            {{ form.contact_form_button_title }}
-                                        </button>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </form>
@@ -162,25 +136,11 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const gclid = urlParams.get('gclid')
-            const campaign = urlParams.get('campaign')
-            const keyword = urlParams.get('keyword')
-            const adgroup = urlParams.get('adgroup')
             if (gclid){
                 document.getElementById('input_gclid').value = gclid;
             }
-
-            if (campaign){
-                document.getElementById('input_campaign').value = campaign;
-            }
-
-            if (keyword){
-                document.getElementById('input_keyword').value = keyword;
-            }
-
-            if (adgroup){
-                document.getElementById('input_adgroup').value = adgroup;
-            }
         </script>
     {% endaddtoblock %}
+
 
 {% endblock %}

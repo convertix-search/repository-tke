@@ -1,17 +1,50 @@
 {% load static sekizai_tags %}
 <!DOCTYPE html>
-<html lang="de">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>TK Home solutions - lead form</title>
+    <title>TK Home solutions - Formulario para leads</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'core/images/faviconV2.png' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'core/css/loader.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/stepper.css' %}?v=4">
-    <link rel="stylesheet" href="{% static 'core/css/main.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}?v=5">
     {% render_block 'css' %}
+
+    <!-- Global site tag (gtag.js) - Google Ads: 1060429618 -->
+    {#    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1060429618"></script>#}
+    {#    <script>#}
+    {#        window.dataLayer = window.dataLayer || [];#}
+    {#        function gtag(){dataLayer.push(arguments);}#}
+    {#        gtag('js', new Date());#}
+    {##}
+    {#        gtag('config', 'AW-1060429618');#}
+    {#    </script>#}
+
+    <!-- Criteo Engagement Tag -->
+    <script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>
+    <script type="text/javascript">
+        window.criteo_q = window.criteo_q || [];
+        var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
+        window.criteo_q.push(
+            { event: "setAccount", account: 79454 }, // You should never update this line
+            { event: "setEmail", email: "" }, // Can be an empty string
+            { event: "setSiteType", type: deviceType},
+            { event: "viewItem", item: "1" });
+    </script>
+    <!-- END Criteo Engagement Tag -->
+
+{#    Below is the Microsoft Advertising UET tag tracking code. You need to add it to your entire website in the header or body sections. If your website has a master page, then you can add it once there and it is included in all pages.#}
+{#    For tips see http://help.ads.microsoft.com/#apex/3/en/56688/-1#}
+    <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5268325"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+
+
 </head>
 
 

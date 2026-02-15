@@ -6,8 +6,8 @@ from core.models import Lead, Answer, Form, Question, FormAnswered, FormContactP
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    search_fields = ('first_name', 'last_name', 'email', 'postal_code', 'phone')
-    list_display = ('first_name', 'last_name', 'address', 'postal_code', 'location', 'phone', 'email', 'gclid', 'created')
+    search_fields = ('first_name', 'last_name', 'email', 'phone', 'county')
+    list_display = ('first_name', 'last_name', 'phone', 'county', 'email', 'gclid', 'created')
     list_filter = ('created', 'formanswered__form__subject')
 
 
@@ -15,7 +15,7 @@ class LeadAdmin(admin.ModelAdmin):
 class FormAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_display = ('id', 'name', 'subtitle', 'subject', 'contact_form_title', 'style', 'order', 'created')
-    list_filter = ('created',)
+    list_filter = ('created', 'style',)
     filter_horizontal = ('questions', 'contact_people',)
 
 
