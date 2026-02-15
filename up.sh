@@ -1,6 +1,7 @@
 #/bin/bash
 hg pull
 hg up
-leadformenv/bin/python manage.py migrate
-leadformenv/bin/python manage.py collectstatic --noinput
+venv/bin/pip install -r requirements.txt
+venv/bin/python manage.py migrate
+venv/bin/python manage.py collectstatic --noinput
 

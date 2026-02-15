@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 from core.utils import send_email
-from constance import config
 from requests.auth import HTTPBasicAuth
 from dict2xml import dict2xml
 from datetime import timezone
+from constance import config
 import requests
 
 
@@ -12,14 +12,12 @@ import requests
 
 class Form(models.Model):
     STYLE_A = 1
-    # STYLE_B = 2
     STYLES = [
         (STYLE_A, 'Style A'),
-        # (STYLE_B, 'Style B'),
     ]
 
-    name = models.CharField(max_length=128)
-    subtitle = models.CharField(max_length=128, blank=True)
+    name = models.CharField(max_length=200)
+    subtitle = models.CharField(max_length=200, blank=True)
     subject = models.CharField(max_length=128, blank=True)
     contact_form_title = models.CharField(max_length=128, blank=True)
     contact_form_button_title = models.CharField(max_length=128, blank=True)
@@ -30,7 +28,10 @@ class Form(models.Model):
     style = models.IntegerField(choices=STYLES, default=STYLE_A)
     contact_people = models.ManyToManyField('core.FormContactPerson', blank=True)
     external_thank_you_page = models.URLField(blank=True, null=True)
-    # country = models.IntegerField(choices=COUNTRIES, default=GERMANY)
+    contact_title = models.CharField(max_length=200, blank=True)
+    contact_subtitle = models.CharField(max_length=200, blank=True)
+    add_gtm = models.BooleanField(default=False)
+    enable_hear_from = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Form'
@@ -45,6 +46,8 @@ class Question(models.Model):
     name = models.CharField(max_length=128)
     order = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    special = models.BooleanField(u'Tipo escalera', default=False)
+    special2 = models.BooleanField(u'Ubicación escalera', default=False)
 
     class Meta:
         verbose_name = 'Question'
@@ -79,22 +82,23 @@ class Answer(models.Model):
 
 class Lead(models.Model):
     first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
-    postal_code = models.CharField(max_length=16)
-    address = models.CharField(max_length=128)
-    location = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=64, blank=True)
+    postal_code = models.CharField(max_length=16, blank=True)
+    address = models.CharField(max_length=128, blank=True)
+    location = models.CharField(max_length=128, blank=True)
     phone = models.CharField(max_length=16)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
+    state = models.CharField(max_length=255, blank=True, null=True) 
+    zip_code = models.CharField(max_length=16,default=00)
+    accept_privacy_policy = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     gclid = models.CharField(max_length=256, blank=True)
-    campaign = models.CharField(max_length=256, blank=True)
-    adgroup = models.CharField(max_length=256, blank=True)
-    keyword = models.CharField(max_length=256, blank=True)
+    hear_from = models.CharField(max_length=256, blank=True)
 
     class Meta:
         verbose_name = 'Lead'
         verbose_name_plural = 'Leads'
-        ordering = ['created', 'first_name', 'last_name']
+        ordering = ['-created', 'first_name', 'last_name']
 
     def __str__(self):
         return u'{} {}'.format(self.first_name, self.last_name)
@@ -124,7 +128,7 @@ class FormAnswered(models.Model):
             'form': self
         }
         send_email(
-            subject='%s: #%s Lead Form Widget' % (self.form.subject, self.id),
+            subject='[New Lead #%s] %s' % (self.id, self.form.subject),
             _from=config.FROM_EMAIL,
             to=managers,
             template='core/emails/communicate_lead_to_admin.html',
@@ -133,18 +137,16 @@ class FormAnswered(models.Model):
 
     def send_lead_by_api(self):
         data = {
-            'lead_id': self.lead.id,
+            'lead_id': 'widget ' + str(self.lead.id),
             'bought_at': self.created.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'lead_source_code': self.form.subject,
             'bought_at_unix': self.created.replace(tzinfo=timezone.utc).timestamp(),
             'offer_contact': {
                 'first_name': self.lead.first_name,
                 'last_name': self.lead.last_name,
                 'address': self.lead.address,
                 'zip_code': self.lead.postal_code,
-                'city': self.lead.location,
-                'country': 'Germany',
-                'country_code': 'de',
+                'country': 'Spain',
+                'country_code': 'es',
                 'email': self.lead.email,
                 'phone': self.lead.phone,
             },

@@ -64,8 +64,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
   .head{
     position: relative;
-    background-image: linear-gradient(to right,#6700ac,#f26c08)!important;
-    padding: 30px 30px;
+    background-image: linear-gradient(to right top, @colorB4, @colorB2)!important;
+    padding: 30px 15px;
     color: @color5;
 
     h4{
@@ -154,9 +154,9 @@ a {
 .module-border-wrap {
   width: 175px;
   position: relative;
-  background: linear-gradient(to right, red, purple);
+  background: linear-gradient(to right top, @colorB4, @colorB2);
   padding: 3px;
-  border-radius: 28px;
+  //border-radius: 28px;
   margin: 0 auto;
   cursor: pointer;
 }
@@ -165,7 +165,7 @@ a {
   background: @color5;
   color: @color4;
   padding: 0 25px;
-  border-radius: 25px;
+  //border-radius: 25px;
   height: 170px;
   display: flex;
   align-items: center;
@@ -193,7 +193,7 @@ a {
       width: 100%;
       height: 100%;
       position: relative;
-      background: linear-gradient(to right, red, purple);
+      background: linear-gradient(to right top, @colorB4, @colorB2);
       padding: 2px;
       border-radius: 28px;
       img{
@@ -245,9 +245,13 @@ a {
   }
 }
 
-/* CSS Added with Thalinda */
-@media (max-width: 600px) {
-  .questions_options .module-border-wrap {
-    width: auto;
-  }
+select{
+  background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
+  -moz-appearance: none; 
+  -webkit-appearance: none; 
+  appearance: none;
+  /* and then whatever styles you want*/
+  height: 30px; 
+  width: 100px;
+  padding: 5px;
 }

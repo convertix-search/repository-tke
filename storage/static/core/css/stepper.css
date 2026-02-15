@@ -42,7 +42,6 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  border-radius: 20%;
   background: #ccc;
   margin-bottom: 6px;
   color: white;
@@ -52,10 +51,10 @@
   font-weight: bold;
 }
 .stepper-item.active .step-counter {
-  background: linear-gradient(to right, red, purple);
+  background: #F26C08;
 }
 .stepper-item.completed .step-counter {
-  background: linear-gradient(to right, red, purple);
+  background: #F26C08;
 }
 .stepper-item.completed::after {
   position: absolute;
