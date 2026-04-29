@@ -89,7 +89,7 @@
 
                                 <div class="row mb-3">
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="postal_code" placeholder="Codice postale*" required/>
+                                        <input type="text" class="form-control mb-3" id="postal_code" name="postal_code" placeholder="Codice postale*" required/>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <input type="text" class="form-control mb-3" name="address" placeholder="Indirizzo*" required/>
@@ -150,6 +150,11 @@
                     const tr_id = urlParams.get('transaction_id')            
                     var transaction_id=$('#transaction_id')
                     transaction_id.attr('value',tr_id);
+                }
+
+                if(form_id == "32" || form_id == 32 ) {        
+                    var postalCodeInput = document.getElementById('postal_code');         
+                    postalCodeInput.setAttribute('hidden', 'true');
                 }
             });
         </script>
