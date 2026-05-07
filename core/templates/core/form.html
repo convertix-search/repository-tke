@@ -27,7 +27,7 @@
 
                 <div class="carousel slide" data-ride="carousel" data-interval="false">
 
-                    <form id="leadForm" method="POST">{% csrf_token %}
+                    <form id="leadForm" method="POST" novalidate>{% csrf_token %}
                         <input type="hidden" id="ip_address" name="ip_address" value=""/>
 
                         <div class="carousel-inner" role="listbox">
@@ -79,10 +79,12 @@
 
                                 <div class="row mb-3">
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control mb-3" name="phone" placeholder="Telefoonnummer*" required/>
+                                        <input type="tel" class="form-control mb-" id="input_phone" name="phone" placeholder="Telefoonnummer*" required/>
+                                        <div id="phone-error" class="text-danger small mb-2" style="display:none;">Voer een geldig telefoonnummer in (bijv. 0612345678).</div>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control mb-3" name="email" placeholder="E-mailadres*" required />
+                                        <input type="email" class="form-control mb-" id="input_email" name="email" placeholder="E-mailadres*" required />
+                                        <div id="email-error" class="text-danger small mb-2" style="display:none;">Voer een geldig e-mailadres in.</div>
                                     </div>
                                 </div>
 
