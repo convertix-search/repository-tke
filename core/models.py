@@ -122,6 +122,7 @@ class Lead(models.Model):
     email = models.EmailField(blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     gclid = models.CharField(max_length=256, blank=True)
+    msclkid = models.CharField(max_length=256, blank=True)
 
     class Meta:
         verbose_name = 'Lead'

@@ -63,6 +63,7 @@
 
                             <div id="contact-data" class="px-2 step step{{ form.questions.count|add:1 }}" data-step="{{ form.questions.count|add:1 }}" style="display: none;">
                                 <input type="hidden" id="input_gclid" name="gclid">
+                                <input type="hidden" id="input_msclkid" name="msclkid">
 
                                 <div class="row mb-4">
                                     <div class="col">
@@ -113,6 +114,10 @@
             const gclid = urlParams.get('gclid')
             if (gclid){
                 document.getElementById('input_gclid').value = gclid;
+            }
+            const msclkid = urlParams.get('msclkid')
+            if (msclkid){
+                document.getElementById('input_msclkid').value = msclkid;
             }
         </script>
     {% endaddtoblock %}

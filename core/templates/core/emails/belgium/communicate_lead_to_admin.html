@@ -43,6 +43,13 @@
                 </tr>
             {% endif %}
 
+            {% if lead.msclkid %}
+                <tr>
+                    <td style="border: 1px solid #808080; padding: 5px;">msclkid</td>
+                    <td style="border: 1px solid #808080; padding: 5px;">{{ lead.msclkid }}</td>
+                </tr>
+            {% endif %}
+
             {% if lead.email %}
                 <tr>
                     <td style="border: 1px solid #808080; padding: 5px;">E-mailadres</td>
