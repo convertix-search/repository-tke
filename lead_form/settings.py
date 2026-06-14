@@ -46,3 +46,10 @@ ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
 ASIOSO_USER = 'hs_user'
 ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
 
+# Explicitly retain Mailjet SMTP settings in production settings scope.
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_TIMEOUT = 15
+

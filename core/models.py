@@ -5,6 +5,7 @@ from dict2xml import dict2xml
 from requests.auth import HTTPBasicAuth
 from datetime import timezone
 from core.utils import send_email
+import sentry_sdk
 import requests
 
 
@@ -152,6 +153,17 @@ class FormAnswered(models.Model):
     def send_mail_to_admins(self):
         managers = self.form.contact_people.all()
         managers = list(manager.email for manager in managers)
+        if not managers:
+            with sentry_sdk.push_scope() as scope:
+                scope.set_tag('component', 'email')
+                scope.set_extra('reason', 'No contact people configured on form')
+                scope.set_extra('form_id', self.form.id)
+                scope.set_extra('form_name', self.form.name)
+                scope.set_extra('form_answered_id', self.id)
+                scope.set_extra('lead_id', self.lead.id)
+                sentry_sdk.capture_message('Email not sent: no recipients configured', level='warning')
+            return False
+
         context = {
             'lead': self.lead,
             'form': self
@@ -160,13 +172,21 @@ class FormAnswered(models.Model):
         if self.form.language == 'fr':
             template = 'core/emails/france/communicate_lead_to_admin.html'
 
-        send_email(
+        sent = send_email(
             subject='%s: #%s Lead Form Widget' % (self.form.subject, self.id),
             _from=config.FROM_EMAIL,
             to=managers,
             template=template,
             context=context
         )
+        if not sent:
+            with sentry_sdk.push_scope() as scope:
+                scope.set_tag('component', 'email')
+                scope.set_extra('form_id', self.form.id)
+                scope.set_extra('form_answered_id', self.id)
+                scope.set_extra('lead_id', self.lead.id)
+                sentry_sdk.capture_message('Email send failed', level='error')
+        return sent
 
     def send_lead_by_api(self):
         country_code = 'fr_be' if self.form.language == Form.FRENCH else 'nl_be'
