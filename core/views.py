@@ -46,6 +46,7 @@ def index(request):
             # Send notification email to the administrators
             form_answered.send_mail_to_admins()
             form_answered.send_lead_by_api()
+            form_answered.send_lead_to_vipimo_api(request.POST)
 
             return redirect('thank_you', form_id=form_answered.id)
 

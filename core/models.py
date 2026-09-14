@@ -159,6 +159,31 @@ class FormAnswered(models.Model):
                                  auth=HTTPBasicAuth(settings.ASIOSO_USER, settings.ASIOSO_PASSWORD))
         aux = response
 
+    def send_lead_to_vipimo_api(self, post_data):
+        """Send lead to Unbounce tracking API when GCLID is present."""
+        if not self.lead.gclid:
+            return
+
+        data = {
+            'name': '%s %s' % (self.lead.first_name, self.lead.last_name),
+            'phone': self.lead.phone,
+            'email': self.lead.email,
+            'city': self.lead.location or '',
+            'address': self.lead.address or '',
+            'postal_code': self.lead.postal_code or '',
+            'privacy_policy': self.accept_privacy_policy,
+            'lead_source': post_data.get('lead_source', 'I-SEA-GO-ENC-LP-CL-U'),
+        }
+
+        headers = {'Content-Type': 'application/json'}
+        try:
+            requests.post(settings.UNBOUNCE_API_URL,
+                          json=data,
+                          headers=headers,
+                          timeout=10)
+        except requests.exceptions.RequestException:
+            pass
+
     @property
     def total_points(self):
         answers = self.answers.aggregate(total_points=models.Sum('points'))

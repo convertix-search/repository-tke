@@ -46,3 +46,5 @@ ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
 ASIOSO_USER = 'hs_user'
 ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
 
+UNBOUNCE_API_URL = 'https://vipimo.tke-miniascensori.it/unbounce-generate_lead'
+

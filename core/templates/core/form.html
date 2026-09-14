@@ -64,6 +64,7 @@
                             <div id="contact-data" class="px-2 step step{{ form.questions.count|add:1 }}" data-step="{{ form.questions.count|add:1 }}" style="display: none;">
                                 <input type="hidden" id="input_gclid" name="gclid">
                                 <input type="hidden" id="transaction_id" name="transaction_id">
+                                <input type="hidden" name="lead_source" value="">
                                 <div class="row mb-4">
                                     <div class="col">
                                         <h3>{{ form.contact_form_title }}</h3>
@@ -141,6 +142,11 @@
             const gclid = urlParams.get('gclid')
             if (gclid){
                 document.getElementById('input_gclid').value = gclid;
+            }
+
+            const leadSource = urlParams.get('lead_source')
+            if (leadSource) {
+                document.querySelector('input[name="lead_source"]').value = leadSource;
             }
 
             $(document).ready(function() {
