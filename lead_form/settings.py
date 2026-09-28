@@ -46,5 +46,8 @@ ASIOSO_API = 'https://asioso-hs-prod.tke-stage.com/save'
 ASIOSO_USER = 'hs_user'
 ASIOSO_PASSWORD = 'HS_ApiRest_28.01.123#'
 
-UNBOUNCE_API_URL = 'https://vipimo.tke-miniascensori.it/unbounce-generate_lead'
+# Customia widget webhook (see customia-webhook-spec.txt)
+CUSTOMIA_WEBHOOK_URL = 'https://vipimo.tke-miniascensori.it/customia-generate_lead'
+CUSTOMIA_WEBHOOK_TOKEN = 'tke-d8b38c7e39bece7cc6b86a9e61b87381'
+CUSTOMIA_WEBHOOK_TEST = True
 

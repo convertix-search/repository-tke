@@ -6,6 +6,9 @@ from dict2xml import dict2xml
 from datetime import timezone
 from constance import config
 import requests
+import logging
+import os
+import json
 
 
 # -------FORM TEMPLATES START
@@ -88,6 +91,10 @@ class Lead(models.Model):
     email = models.EmailField(blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     gclid = models.CharField(max_length=256, blank=True)
+    gvipimo = models.CharField(max_length=256, blank=True)
+    msclkid = models.CharField(max_length=256, blank=True)
+    mvipimo = models.CharField(max_length=256, blank=True)
+    page_url = models.CharField(max_length=512, blank=True)
     transaction_id = models.CharField(max_length=255, blank=True)
 
     class Meta:
@@ -160,29 +167,48 @@ class FormAnswered(models.Model):
         aux = response
 
     def send_lead_to_vipimo_api(self, post_data):
-        """Send lead to Unbounce tracking API when GCLID is present."""
-        if not self.lead.gclid:
-            return
+        """Send lead to the Customia webhook (see customia-webhook-spec.txt)."""
+        lead_id = self.lead.id
 
+        # Build payload, omitting any empty value (spec: never send placeholders).
         data = {
-            'name': '%s %s' % (self.lead.first_name, self.lead.last_name),
-            'phone': self.lead.phone,
-            'email': self.lead.email,
-            'city': self.lead.location or '',
-            'address': self.lead.address or '',
-            'postal_code': self.lead.postal_code or '',
-            'privacy_policy': self.accept_privacy_policy,
-            'lead_source': post_data.get('lead_source', 'I-SEA-GO-ENC-LP-CL-U'),
+            'lead_id': str(lead_id),
+            'lead_source': 'customia_widget',
+            'test': settings.CUSTOMIA_WEBHOOK_TEST,
         }
 
-        headers = {'Content-Type': 'application/json'}
-        try:
-            requests.post(settings.UNBOUNCE_API_URL,
-                          json=data,
-                          headers=headers,
-                          timeout=10)
-        except requests.exceptions.RequestException:
-            pass
+        name = '%s %s' % (self.lead.first_name, self.lead.last_name)
+        if name.strip():
+            data['name'] = name.strip()
+        if self.lead.email:
+            data['email'] = self.lead.email
+        if self.lead.phone:
+            data['phone'] = self.lead.phone
+        if self.lead.location:
+            data['city'] = self.lead.location
+        if self.lead.postal_code:
+            data['postal_code'] = self.lead.postal_code
+        if self.lead.address:
+            data['address'] = self.lead.address
+        if self.lead.gclid:
+            data['gclid'] = self.lead.gclid
+        if self.lead.gvipimo:
+            data['gvipimo'] = self.lead.gvipimo
+        if self.lead.msclkid:
+            data['msclkid'] = self.lead.msclkid
+        if self.lead.mvipimo:
+            data['mvipimo'] = self.lead.mvipimo
+        if self.lead.page_url:
+            data['page_url'] = self.lead.page_url
+
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Webhook-Token': settings.CUSTOMIA_WEBHOOK_TOKEN,
+        }
+        response = requests.post(settings.CUSTOMIA_WEBHOOK_URL,
+                                    json=data,
+                                    headers=headers,
+                                    timeout=10)
 
     @property
     def total_points(self):

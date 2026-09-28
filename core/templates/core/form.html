@@ -63,6 +63,10 @@
 
                             <div id="contact-data" class="px-2 step step{{ form.questions.count|add:1 }}" data-step="{{ form.questions.count|add:1 }}" style="display: none;">
                                 <input type="hidden" id="input_gclid" name="gclid">
+                                <input type="hidden" id="input_gvipimo" name="gvipimo">
+                                <input type="hidden" id="input_msclkid" name="msclkid">
+                                <input type="hidden" id="input_mvipimo" name="mvipimo">
+                                <input type="hidden" id="input_page_url" name="page_url">
                                 <input type="hidden" id="transaction_id" name="transaction_id">
                                 <input type="hidden" name="lead_source" value="">
                                 <div class="row mb-4">
@@ -142,6 +146,26 @@
             const gclid = urlParams.get('gclid')
             if (gclid){
                 document.getElementById('input_gclid').value = gclid;
+            }
+
+            const gvipimo = urlParams.get('gvipimo')
+            if (gvipimo){
+                document.getElementById('input_gvipimo').value = gvipimo;
+            }
+
+            const msclkid = urlParams.get('msclkid')
+            if (msclkid){
+                document.getElementById('input_msclkid').value = msclkid;
+            }
+
+            const mvipimo = urlParams.get('mvipimo')
+            if (mvipimo){
+                document.getElementById('input_mvipimo').value = mvipimo;
+            }
+
+            const pageUrl = urlParams.get('page_url')
+            if (pageUrl){
+                document.getElementById('input_page_url').value = pageUrl;
             }
 
             const leadSource = urlParams.get('lead_source')
